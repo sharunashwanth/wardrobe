@@ -1,21 +1,25 @@
 export const getFromLocalStorage = (key) => localStorage.getItem(key);
-export const setToLocalStorage = (key, value) => localStorage.setItem(key, value);
+export const setToLocalStorage = (key, value) =>
+  localStorage.setItem(key, value);
 
-export const exportTrackingData = () => {
-    let currentTrackingData = {
-        search_query: getFromLocalStorage("search_query"),
-        shown_result: JSON.parse(getFromLocalStorage("shown_result")),
-        items_viewed: JSON.parse(getFromLocalStorage("items_viewed"))
-    };
+export const exportTrackingData = async () => {
+  let currentTrackingData = {
+    search_query: getFromLocalStorage("search_query"),
+    shown_result: JSON.parse(getFromLocalStorage("shown_result")),
+    items_viewed: JSON.parse(getFromLocalStorage("items_viewed")),
+  };
 
-    if (getFromLocalStorage("tracking_history") === null)  {
-        setToLocalStorage("tracking_history", "[]");
-    }
+  // TODO: remove isVisible while exporting the data
 
-    let history = JSON.parse(getFromLocalStorage("tracking_history"));
-    history.push(currentTrackingData);
-    setToLocalStorage("tracking_history", JSON.stringify(history));
+  let response = await fetch("https://acpproject021.pythonanywhere.com/api/store/", {
+    method: "POST",
 
-    // TODO: Update the tracked data to server
+    body: JSON.stringify({
+        user_id: getFromLocalStorage("user_id"),
+        json_data: currentTrackingData
+    })
+  });
+  response = await response.json();
+  
+  console.log(response);
 };
-
