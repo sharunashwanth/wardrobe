@@ -1,0 +1,17 @@
+{
+    "search_query": "",
+    "shown_results": [ "asin" ],
+    "items_viewed": [
+        ["[asin]", {
+            "action": "none | cart | wishlist | checkout",
+            "most_viewed_section": "",
+            "last_viewed_section": "",
+            "sections_timing": {
+                "[section]": {
+                    "max_continuous_time": "",
+                    "total_view_time": ""
+                }
+            }
+        }]
+    ]
+}
