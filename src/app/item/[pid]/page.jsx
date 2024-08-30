@@ -75,7 +75,7 @@ export default function ItemPage() {
 
   return (
     <>
-       <Items />
+       <Items data={data}/>
        
       {/* <p>{data.pid}</p>
       <p>{data.brand}</p>
