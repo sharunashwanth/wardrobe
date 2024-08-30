@@ -1,5 +1,7 @@
 "use client";
 
+import Error from "@/components/Error";
+import Loading from "@/components/Loading";
 import {
   exportTrackingData,
   getFromLocalStorage,
@@ -12,8 +14,6 @@ import React, { useEffect } from "react";
 export default function SearchPage() {
   const pathname = usePathname();
   const searchParams = useSearchParamsObject();
-
-  console.log(pathname, searchParams);
 
   if (!searchParams.query) {
     return <p>`query` param is required*</p>;
@@ -41,6 +41,9 @@ export default function SearchPage() {
 
     setUpTrackingArea();
   }, []);
+
+  if (loading === true) return <Loading />;
+  if (error !== null) return <Error message={error} />;
 
   return (
     <>

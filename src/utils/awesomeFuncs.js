@@ -9,28 +9,35 @@ export const exportTrackingData = async (invoker) => {
     items_viewed: JSON.parse(getFromLocalStorage("items_viewed")),
   };
 
-  if (getFromLocalStorage("tracking_history") === null) {
-    setToLocalStorage("tracking_history", "[]");
+  return ;
+  
+  let nData = 7;
+  let isActionMadeInPastNData = ((items_viewed) => {
+    for (let item of items_viewed) {
+      if (item[1].action !== "none") {
+        return true;
+      }
+    }
+    return false;
+  })(currentTrackingData.items_viewed);
+
+  let condition = currentTrackingData.items_viewed.length > nData || isActionMadeInPastNData;
+  if (condition) {
+    let response = await fetch(
+      "https://acpproject021.pythonanywhere.com/api/store/",
+      {
+        method: "POST",
+
+        body: JSON.stringify({
+          user_id: getFromLocalStorage("user_id"),
+          json_data: currentTrackingData,
+        }),
+      }
+    );
+    response = await response.json();
   }
 
-  let history = JSON.parse(getFromLocalStorage("tracking_history"));
-  history.push(currentTrackingData);
-  setToLocalStorage("tracking_history", JSON.stringify(history));
+  console.log(condition);
 
-  // TODO: remove isVisible while exporting the data
-  return;
-  let response = await fetch(
-    "https://acpproject021.pythonanywhere.com/api/store/",
-    {
-      method: "POST",
-
-      body: JSON.stringify({
-        user_id: getFromLocalStorage("user_id"),
-        json_data: currentTrackingData,
-      }),
-    }
-  );
-  response = await response.json();
-
-  console.log(response);
+  setToLocalStorage("items_viewed", "[]");
 };

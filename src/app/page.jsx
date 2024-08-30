@@ -1,5 +1,7 @@
 "use client";
 
+import Error from "@/components/Error";
+import Loading from "@/components/Loading";
 import Category from "@/components/Category";
 import Header from "@/components/Header";
 import { exportTrackingData, getFromLocalStorage, setToLocalStorage } from "@/utils/awesomeFuncs";
@@ -27,17 +29,15 @@ export default function Home() {
     setUpTrackingArea();
   }, []);
 
-  if (loading === true) return <p>Loading</p>;
-
-  if (error !== null) return <p>Error</p>;
-
-  console.log(Object.entries(data));
+  if (loading === true) return <Loading />;
+  if (error !== null) return <Error message={error} />;
 
   return (
     <>
       <Header />
-      {Object.entries(data).map(([categoryName, categoryData]) => <Category categoryName={categoryName} categoryData={categoryData} />)}
-     
+      <div className="space-y-5">
+        {Object.entries(data).map(([categoryName, categoryData]) => <Category categoryName={categoryName} categoryData={categoryData} />)}
+      </div>
     </>
   );
 }

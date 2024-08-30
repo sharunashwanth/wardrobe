@@ -1,11 +1,14 @@
 "use client";
 
+import Error from "@/components/Error";
+import Loading from "@/components/Loading";
 import Items from "@/components/Items";
-import { getFromLocalStorage, setToLocalStorage } from "@/utils/awesomeFuncs";
+import { exportTrackingData, getFromLocalStorage, setToLocalStorage } from "@/utils/awesomeFuncs";
 import { useFetch } from "@/utils/awesomeHooks";
 import TrackItemPageSection from "@/utils/TrackItemPageSection";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import Header from "@/components/Header";
 
 const formatSectionTimingData = (pid, sectionTimingData, action = "none") => {
   const mostViewedSection = Object.keys(sectionTimingData).reduce(
@@ -44,9 +47,13 @@ const addToItemsViewed = (formattedData) => {
   itemsViewed.push(formattedData);
 
   setToLocalStorage("items_viewed", JSON.stringify(itemsViewed));
+
+  if (itemsViewed.length >= 7) {
+    exportTrackingData("item_changed");
+  }
 };
 
-const formatAndAddToItemsViewed = (pid, sectionTimingData, action = "none") => {
+const formatAndAddToItemsViewed = (pid, sectionTimingData, action) => {
   let formattedData = formatSectionTimingData(pid, sectionTimingData, action);
   addToItemsViewed(formattedData);
 };
@@ -54,6 +61,7 @@ const formatAndAddToItemsViewed = (pid, sectionTimingData, action = "none") => {
 export default function ItemPage() {
   const params = useParams();
   const [sectionTimingData, setSectionTimingData] = useState({});
+  const [action, setAction] = useState("none");
 
   const [data, error, loading] = useFetch(
     `https://acpproject021.pythonanywhere.com/api/item/${params.pid}`
@@ -61,7 +69,7 @@ export default function ItemPage() {
 
   useEffect(() => {
     const beforeUnload = () => {
-      formatAndAddToItemsViewed(params.pid, sectionTimingData);
+      formatAndAddToItemsViewed(params.pid, sectionTimingData, action);
     };
     window.addEventListener("beforeunload", beforeUnload);
 
@@ -70,44 +78,18 @@ export default function ItemPage() {
     };
   }, [sectionTimingData]);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading === true) return <Loading />;
+  if (error !== null) return <Error message={error} />;
 
   return (
     <>
-       <Items data={data}/>
-       
-      {/* <p>{data.pid}</p>
-      <p>{data.brand}</p>
-      <TrackItemPageSection
-        id="header"
+      <Header />
+      <Items
+        TrackItemPageSection={TrackItemPageSection}
         setSectionTimingData={setSectionTimingData}
-      >
-        <div className="h-[400px]">Header</div>
-      </TrackItemPageSection>
-      <TrackItemPageSection
-        id="chatbot"
-        setSectionTimingData={setSectionTimingData}
-      >
-        <div className="h-[400px]">Chatbot</div>
-      </TrackItemPageSection>
-
-      <p>Hello Mom</p>
-
-      <TrackItemPageSection
-        id="footer"
-        setSectionTimingData={setSectionTimingData}
-      >
-        <div className="h-[400px]">Footer</div>
-      </TrackItemPageSection>
-
-      <button
-        onClick={() => {
-          formatAndAddToItemsViewed(params.pid, sectionTimingData);
-        }}
-      >
-        Button
-      </button> */}
+        setAction={setAction}
+        data={data}
+      />
     </>
   );
 }
