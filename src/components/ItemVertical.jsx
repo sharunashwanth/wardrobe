@@ -5,9 +5,9 @@ export default function ItemVertical(props) {
     
     return (
         <>
-            <div key={itemData.pid} className="inline-block aspect-square object-contain  w-[320px]  border-l-indigo-200 rounded-md ring-inset ring-slate-300 shadow-lg hover:shadow-slate-400 hover:translate-x-1 hover:duration-75 ring-1">
+            <div key={itemData.pid} className="inline-block aspect-square object-contain min-w-[320px] max-w-[320px] px-4 py-2  border-l-indigo-200 rounded-md ring-inset ring-slate-300 shadow-lg hover:shadow-slate-400 hover:translate-x-1 hover:duration-75 ring-1 overflow-hidden whitespace-nowrap text-ellipsis text-center h-[360px]">
                 <a href="#"><img src={itemData.images[0]} alt={itemData.title} className="flex items-center justify-center aspect-square object-contain w-60 pt-8 pl-10 scale-125 rounded-xl " /></a>
-                <p className="text-start mt-5 cursor-pointer  text-clip text-xl overflow-hidden font-serif px-1 py-2 ">{itemData.title}</p>
+                <p className="mt-5 cursor-pointer  text-xl font-serif px-1 py-2 w-[60%]">{itemData.title}</p>
                 <p className="text-center cursor-pointer mt-0.1 mb-3">{itemData.price} RS</p>
             </div>
         </>

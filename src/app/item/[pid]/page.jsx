@@ -77,7 +77,6 @@ export default function ItemPage() {
     <>
        <Items />
        
-       
       {/* <p>{data.pid}</p>
       <p>{data.brand}</p>
       <TrackItemPageSection
