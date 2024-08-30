@@ -87,6 +87,7 @@ export default function ItemPage() {
       <Items
         TrackItemPageSection={TrackItemPageSection}
         setSectionTimingData={setSectionTimingData}
+        action={action}
         setAction={setAction}
         data={data}
       />

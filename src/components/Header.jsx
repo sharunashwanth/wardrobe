@@ -4,7 +4,7 @@ import React from "react";
 export default function Header() {
   return (
     <>
-      <header className="flex items-center justify-around p-0 text-white sticky top-0 z-10 bg-cyan-300 py-2 mb-5">
+      <header className="flex items-center justify-around p-0 text-white sticky top-0 z-10 bg-orange-400 py-2 mb-5">
         <div className="flex items-center space-x-2">
           <Image
             src="/logo.jpg"
@@ -14,7 +14,7 @@ export default function Header() {
           />
           <h1 className=" flex text-2xl font-bold font-serif text-slate-100 top-0 mt-1">
             Wardrobe
-            <span className="text-blue-700 mr-60">Consult</span>
+            <span className="text-orange-800 mr-60">Consult</span>
           </h1>
         </div>
         <form action="/search">

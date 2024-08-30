@@ -41,7 +41,5 @@ export const exportTrackingData = async (invoker) => {
     setToLocalStorage("data_sent", "true");
   }
 
-  console.log(condition);
-
   setToLocalStorage("items_viewed", "[]");
 };
