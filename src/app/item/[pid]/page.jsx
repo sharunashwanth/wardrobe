@@ -1,5 +1,6 @@
 "use client";
 
+import Items from "@/components/Items";
 import { getFromLocalStorage, setToLocalStorage } from "@/utils/awesomeFuncs";
 import { useFetch } from "@/utils/awesomeHooks";
 import TrackItemPageSection from "@/utils/TrackItemPageSection";
@@ -74,7 +75,10 @@ export default function ItemPage() {
 
   return (
     <>
-      <p>{data.pid}</p>
+       <Items />
+       
+       
+      {/* <p>{data.pid}</p>
       <p>{data.brand}</p>
       <TrackItemPageSection
         id="header"
@@ -104,7 +108,7 @@ export default function ItemPage() {
         }}
       >
         Button
-      </button>
+      </button> */}
     </>
   );
 }
