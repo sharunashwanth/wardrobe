@@ -8,7 +8,7 @@ export const exportTrackingData = async (invoker) => {
     shown_result: JSON.parse(getFromLocalStorage("shown_result")),
     items_viewed: JSON.parse(getFromLocalStorage("items_viewed")),
   };
-
+    
   return ;
   
   let nData = 7;

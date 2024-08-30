@@ -71,7 +71,7 @@ export default function Items(props) {
     if (reviewError !== null) return <Error message={reviewError} />;
     
     return <>
-        <div className="flex space-x-3 h-[90vh] overflow-hidden">
+        <div className="flex space-x-3 h-[85vh] overflow-hidden">
             <div className="w-1/5 bg-slate-300">
                 <img
                     src={data.images[0]}
@@ -80,44 +80,43 @@ export default function Items(props) {
                 />
             </div>
 
-            <div className="w-[56%] bg-slate-300 overflow-scroll no-scroll">
-                <TrackItemPageSection id="item-detail" setSectionTimingData={setSectionTimingData}>
-                    <div className="flex flex-col justify-start w-full">
-                        <h2 className="text-xl font-semibold mb-2">{data.title}</h2>
-                        <p className="text-lg font-bold text-gray-700 mb-2">{data.price} Rs</p>
-                        <p className="text-sm text-gray-500 mb-4">{data.brand}</p>
-                        <p className="text-sm text-gray-500 mb-4">{data.category}</p>
-                        <p className="text-sm text-gray-500 mb-4">{data.sub_category}</p>
-                        <p className="text-sm text-gray-500 mb-4">Rating: {getAvgRating(reviewData.ratings)}</p>
-                    </div>
-                </TrackItemPageSection>
-                
-                <TrackItemPageSection id="description" setSectionTimingData={setSectionTimingData}>
-                    <p className="text-sm text-gray-600 mb-4">{data.description}</p>
-                </TrackItemPageSection>
+            <div className="w-[56%] bg-slate-300 ">
+                <div className="h-[95%] overflow-scroll no-scroll">
+                    <TrackItemPageSection id="item-detail" setSectionTimingData={setSectionTimingData}>
+                        <div className="flex flex-col justify-start w-full">
+                            <h2 className="text-xl font-semibold mb-2">{data.title}</h2>
+                            <p className="text-lg font-bold text-gray-700 mb-2">{data.price} Rs</p>
+                            <p className="text-sm text-gray-500 mb-4">{data.brand}</p>
+                            <p className="text-sm text-gray-500 mb-4">{data.category}</p>
+                            <p className="text-sm text-gray-500 mb-4">{data.sub_category}</p>
+                            <p className="text-sm text-gray-500 mb-4">Rating: {getAvgRating(reviewData.ratings)}</p>
+                        </div>
+                    </TrackItemPageSection>
+                    
+                    <TrackItemPageSection id="description" setSectionTimingData={setSectionTimingData}>
+                        <p className="text-sm text-gray-600 mb-4">{data.description}</p>
+                    </TrackItemPageSection>
+                    <TrackItemPageSection id="specifications" setSectionTimingData={setSectionTimingData}>
+                        <h3 className="text-md font-medium mb-2">Specifications</h3>
+                        <ProductDetails details={data.product_details} />
+                    </TrackItemPageSection>
+                    <TrackItemPageSection id="reviews" setSectionTimingData={setSectionTimingData}>
+                        <h2>Reviews</h2>
+                        <Review reviewData={reviewData}/>
+                    </TrackItemPageSection>
+                    <TrackItemPageSection id="reviews" setSectionTimingData={setSectionTimingData}>
+                        <Recommendations subCategory={data.sub_category} />
+                    </TrackItemPageSection>
+                </div>
 
-                <TrackItemPageSection id="specifications" setSectionTimingData={setSectionTimingData}>
-                    <h3 className="text-md font-medium mb-2">Specifications</h3>
-                    <ProductDetails details={data.product_details} />
-                </TrackItemPageSection>
-
-                <TrackItemPageSection id="reviews" setSectionTimingData={setSectionTimingData}>
-                    <h2>Reviews</h2>
-                    <Review reviewData={reviewData}/>
-                </TrackItemPageSection>
-
-                <TrackItemPageSection id="reviews" setSectionTimingData={setSectionTimingData}>
-                    <Recommendations subCategory={data.sub_category} />
-                </TrackItemPageSection>
-
-                <div className="fixed bottom-0">
+                <div className="bottom-2">
                     <button onClick={() => setAction("wishlist")}>Wishlist</button>
                     <button onClick={() => setAction("cart")}>Add to Cart</button>
                     <button onClick={() => setAction("buy")}>Buy Now</button>
                 </div>
             </div>
             
-            <div className="w-2/6 h-[200vh] overflow-scroll bg-slate-300 no-scroll">
+            <div className="w-2/6 min-h-[80vh] overflow-scroll bg-slate-300 no-scroll">
                 <Chatbot productData={data} ratings={reviewData.ratings} />
             </div>
         </div>
