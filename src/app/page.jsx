@@ -14,7 +14,7 @@ export default function Home() {
   useEffect(() => {
     async function setUpTrackingArea() {
       if (getFromLocalStorage("searching") === "true") {
-        exportTrackingData();
+        exportTrackingData("search_reset");
       }
 
       setToLocalStorage("searching", "false");

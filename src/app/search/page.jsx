@@ -29,7 +29,7 @@ export default function SearchPage() {
     async function setUpTrackingArea() {
       if (getFromLocalStorage("searching") === "true") {
         if (getFromLocalStorage("search_query") === searchQuery) return;
-        exportTrackingData();
+        exportTrackingData("search_changed");
       }
 
       setToLocalStorage("searching", "true");
