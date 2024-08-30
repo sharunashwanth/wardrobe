@@ -15,9 +15,11 @@ export const exportTrackingData = async (invoker) => {
   let isActionMadeInPastNData = ((items_viewed) => {
     for (let item of items_viewed) {
       if (item[1].action !== "none") {
+        setToLocalStorage("data_sent_condition", "true");
         return true;
       }
     }
+    setToLocalStorage("data_sent_condition", "false");
     return false;
   })(currentTrackingData.items_viewed);
 
@@ -35,6 +37,8 @@ export const exportTrackingData = async (invoker) => {
       }
     );
     response = await response.json();
+
+    setToLocalStorage("data_sent", "true");
   }
 
   console.log(condition);

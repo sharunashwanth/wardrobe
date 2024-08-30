@@ -24,7 +24,4 @@ export default function ItemVertical(props) {
       </div>
     </>
   );
-  "flex items-center justify-center aspect-square object-contain w-60 pt-8 pl-10 scale-125 rounded-xl "
-  "mt-5 cursor-pointer  text-xl font-serif px-1 py-2 w-[60%]"
-  "text-center cursor-pointer mt-0.1 mb-3"
 }
