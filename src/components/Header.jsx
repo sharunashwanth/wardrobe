@@ -8,6 +8,7 @@ export default function Header() {
         <div className="flex items-center space-x-2">
           <Image
             src="/logo.jpg"
+            alt="site logo"
             className="bg-cover rounded-full"
             width={50}
             height={80}

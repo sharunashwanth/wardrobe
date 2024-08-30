@@ -36,7 +36,7 @@ export default function Home() {
     <>
       <Header />
       <div className="space-y-5">
-        {Object.entries(data).map(([categoryName, categoryData]) => <Category categoryName={categoryName} categoryData={categoryData} />)}
+        {Object.entries(data).map(([categoryName, categoryData]) => <Category key={categoryName} categoryName={categoryName} categoryData={categoryData} />)}
       </div>
     </>
   );

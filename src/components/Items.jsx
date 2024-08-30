@@ -40,10 +40,10 @@ function ProductDetails(props) {
 }
 
 function Review({ reviewData }) {
-    let markup = reviewData.documents.map((review, i) => <>
+    let markup = reviewData.documents.map((review, i) => <div key={i}>
         <h2 className="text-xl px-1  font-mono font-extrabold p-2 flex "><img src="/OIP.jpeg" alt="logo" className="w-12 rounded-full px-2" /> User - {i + 1}</h2>
         <p className="text-lg px-10  py-1 mb-5">{review.review}</p>
-    </>
+    </div>
     );
     
     return <div>
@@ -100,32 +100,28 @@ const ImageSection = ({ data }) => {
     const [currentImage, setCurrentImage] = useState(data.images[0]);
     
     return <>
-    <div>
-        <img
-            src={currentImage}
-            className="w-[200px] h-[300px] object-cover rounded-md shadow-lg"
-            alt={data.title}
-        />
-    </div>
-    <div className="flex space-x-4 justify-center flex-wrap w-full">
-        {data.images.map((image) => {
-            return <div onClick={() => setCurrentImage(image)} className={`size-14 border-2 border-slate-600 border-double p-1 rounded-md cursor-pointer hover:scale-105 hover:bg-slate-300 mb-3 ${image === currentImage ? "bg-slate-300" : ""}`}>
-                <img src={image} alt={image} className="size-full aspect-square object-contain" />
-            </div>;
-        })}
-    </div>
+        <div className="w-[200px] h-[300px] flex justify-center items-center">
+            <img
+                src={currentImage}
+                className="object-contain size-full rounded-md"
+                alt={data.title}
+            />
+        </div>
+        <div className="flex space-x-4 justify-center flex-wrap w-full">
+            {data.images.map((image) => {
+                return <div key={image} onClick={() => setCurrentImage(image)} className={`size-14 border-2 border-slate-600 border-double p-1 rounded-md cursor-pointer hover:scale-105 hover:bg-slate-300 mb-3 ${image === currentImage ? "bg-slate-300" : ""}`}>
+                    <img src={image} alt={image} className="size-full aspect-square object-contain" />
+                </div>;
+            })}
+        </div>
     </>;
 }
 
 const RatingStars = ({ rating }) => {
     let markup = [];
-    let star = <FaStar />;
-    let colorStar = <FaStar className="text-yellow-400" />;
 
-    for(let i = 0;i < rating;i++) markup.push(colorStar);
-    for(let i = 0;i < 5 - rating;i++) markup.push(star);
-
-    console.log(markup);
+    for(let i = 0;i < rating;i++) markup.push(<FaStar key={crypto.randomUUID()} className="text-yellow-400" />);
+    for(let i = 0;i < 5 - rating;i++) markup.push(<FaStar key={crypto.randomUUID()} />);
 
     return <div className="flex items-center">
         <p>Rating: </p>
@@ -205,6 +201,5 @@ export default function Items(props) {
                 <Chatbot productData={data} ratings={reviewData.ratings} />
             </div>
         </div>
-
     </>
 }

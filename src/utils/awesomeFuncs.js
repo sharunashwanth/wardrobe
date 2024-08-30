@@ -5,10 +5,10 @@ export const setToLocalStorage = (key, value) =>
 export const exportTrackingData = async (invoker) => {
   let currentTrackingData = {
     search_query: getFromLocalStorage("search_query"),
-    shown_result: JSON.parse(getFromLocalStorage("shown_result")),
+    shown_result: JSON.parse(getFromLocalStorage("shown_results")),
     items_viewed: JSON.parse(getFromLocalStorage("items_viewed")),
   };
-    
+  
   return ;
   
   let nData = 7;
@@ -43,3 +43,15 @@ export const exportTrackingData = async (invoker) => {
 
   setToLocalStorage("items_viewed", "[]");
 };
+
+export const toggleElementInArray = (list, target) => {
+  const index = list.indexOf(target);
+  
+  if (index === -1) {
+    list.push(target);
+  } else {
+    list.splice(index, 1);
+  }
+
+  return list;
+}

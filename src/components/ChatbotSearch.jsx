@@ -19,7 +19,7 @@ const ChatMessage = ({ msg }) => {
   );
 };
 
-export default function Chatbot({ productData, ratings }) {
+export default function ChatbotSearch({ selectedItems, searchResults }) {
   let [chat, setChat] = useState([
     { by: "bot", msg: "<p>Hello! How can I assit you?</p>" },
   ]);
@@ -33,9 +33,7 @@ export default function Chatbot({ productData, ratings }) {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [chat]);
+  useEffect(() => { scrollToBottom(); }, [chat]);
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,8 +43,9 @@ export default function Chatbot({ productData, ratings }) {
     let url = `https://acpproject021.pythonanywhere.com/api/chat/`;
     let payload = {
         "query": query,
-        "product": [productData, ratings],
-        "history": chat
+        "product": searchResults,
+        "history": chat,
+        "selected_items": selectedItems
     };
 
     let response = await fetch(url, {
@@ -57,7 +56,7 @@ export default function Chatbot({ productData, ratings }) {
 
     setChat([ ...chat, {by: "bot", msg: response.html} ]);
     setResponding(false);
-    setQuery("");  
+    setQuery("");   
   };
 
   return (

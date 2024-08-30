@@ -11,7 +11,7 @@ export default function Category(props) {
         <h2 className="text-xl font-semibold mb-6">{categoryName}</h2>
         <div className="flex space-x-5 overflow-x-scroll no-scroll">
           {categoryData.map((item) => (
-            <ItemVertical itemData={item} />
+            <ItemVertical key={item.pid} itemData={item} />
           ))}
         </div>
       </section>
