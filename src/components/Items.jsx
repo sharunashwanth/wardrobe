@@ -41,7 +41,7 @@ export default function Items(props) {
     
     return <>
         <div className="flex space-x-3 h-[90vh] overflow-hidden">
-            <div className="w-[360px] bg-slate-300">
+            <div className="w-1/5 bg-slate-300">
                 <img
                     src={data.images[0]}
                     className="w-[200px] h-[300px] object-cover"
@@ -49,7 +49,7 @@ export default function Items(props) {
                 />
             </div>
 
-            <div className=" bg-slate-300">
+            <div className="w-auto bg-slate-300 overflow-scroll no-scroll">
                 <TrackItemPageSection id="item-detail" setSectionTimingData={setSectionTimingData}>
                     <div className="flex flex-col justify-start w-full">
                         <h2 className="text-xl font-semibold mb-2">{data.title}</h2>
@@ -78,8 +78,8 @@ export default function Items(props) {
                 </div>
             </div>
             
-            <div className="w-[400px] h-[200vh] overflow-scroll bg-slate-300">
-                <Chatbot />
+            <div className="w-2/6 h-[200vh] overflow-scroll bg-slate-300 no-scroll">
+                <Chatbot productData={data} />
             </div>
         </div>
 

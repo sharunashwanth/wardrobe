@@ -1,9 +1,10 @@
 import React from "react";
 
-export default function Chatbot() {
+export default function Chatbot({ productData }) {
+
     return (
         <div>
-            <p>Chatbot</p>
+            
         </div>
     );
 };
