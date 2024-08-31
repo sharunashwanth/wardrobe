@@ -6,7 +6,7 @@ import Category from "@/components/Category";
 import Header from "@/components/Header";
 import { exportTrackingData, getFromLocalStorage, setToLocalStorage } from "@/utils/awesomeFuncs";
 import { useFetch } from "@/utils/awesomeHooks";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 
 export default function Home() {
   const [data, error, loading] = useFetch(
@@ -34,10 +34,12 @@ export default function Home() {
 
   return (
     <>
+      <Suspense fallback={<Loading />}>
       <Header />
       <div className="space-y-5">
         {Object.entries(data).map(([categoryName, categoryData]) => <Category key={categoryName} categoryName={categoryName} categoryData={categoryData} />)}
       </div>
+      </Suspense>
     </>
   );
 }

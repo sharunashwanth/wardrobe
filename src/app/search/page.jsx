@@ -11,7 +11,7 @@ import {
   toggleElementInArray,
 } from "@/utils/awesomeFuncs";
 import { useFetch, useSearchParamsObject } from "@/utils/awesomeHooks";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { CiCirclePlus } from "react-icons/ci";
 import { FcOk } from "react-icons/fc";
 
@@ -33,11 +33,6 @@ const SelectSearchItem = ({ selectedItems, setSelectedItems, pid }) => {
 
 export default function SearchPage() {
   const searchParams = useSearchParamsObject();
-
-  if (!searchParams.query) {
-    return <p>`query` param is required*</p>;
-  }
-
   const searchQuery = searchParams.query;
 
   const [data, error, loading] = useFetch(
@@ -63,6 +58,11 @@ export default function SearchPage() {
     setUpTrackingArea();
   }, []);
 
+  
+  if (!searchParams.query) {
+    return <p>`query` param is required*</p>;
+  }
+
   if (loading === true) return <Loading />;
   if (error !== null) return <Error message={error} />;
 
@@ -72,10 +72,11 @@ export default function SearchPage() {
   
   return (
     <>
+      <Suspense>
       <Header />
       <div className="flex">
         <div className="w-[60%] h-[85vh] left-0 overflow-scroll no-scroll px-6">
-          <h2 className="pb-6 px-2 text-xl">Showing results for '{searchQuery}'</h2>
+          <h2 className="pb-6 px-2 text-xl">Showing results for {searchQuery}&apos;</h2>
           {data.results.map((item) => {
             return <a href={`/item/${item.pid}`} className="group relative" key={item.pid}>
               <div className="flex py-6 shadow-inner hover:shadow-slate-400 mb-5 hover:bg-slate-100 rounded-lg">
@@ -96,6 +97,7 @@ export default function SearchPage() {
           <ChatbotSearch selectedItems={selectedItems} searchResults={data} />
         </div>
       </div>
+      </Suspense>
     </>
   );
 }

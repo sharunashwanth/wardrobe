@@ -4,7 +4,7 @@ import { setToLocalStorage } from "@/utils/awesomeFuncs";
 import { useSearchParamsObject } from "@/utils/awesomeHooks";
 import React, { useEffect } from "react";
 
-export default function page() {
+export default function SetuserId() {
     const searchParams = useSearchParamsObject();
 
     useEffect(() => {
