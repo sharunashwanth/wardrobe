@@ -21,7 +21,7 @@ const ChatMessage = ({ msg }) => {
 
 export default function Chatbot({ productData, ratings }) {
   let [chat, setChat] = useState([
-    { by: "bot", msg: "<p>Hello! How can I assit you?</p>" },
+    { by: "bot", msg: "<p>Hello! How can I assist you?</p>" },
   ]);
 
   const [responding, setResponding] = useState(false);

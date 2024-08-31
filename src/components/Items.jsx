@@ -92,7 +92,7 @@ const BuyNow = ({ action, setAction }) => {
         setAction( action !== "buy" ? "buy" : "none" )
     }
     
-    let styles = `px-4 py-1 rounded-2xl bg-slate-300 ${action === "buy" ? "bg-orange-500" : ""}`
+    let styles = `px-4 py-1 rounded-2xl bg-slate-300 ${action === "buy" ? "bg-orange-300" : ""}`
     return <button onClick={handleClick} className={styles}>
         Buy Now
     </button>;
