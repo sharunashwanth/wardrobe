@@ -19,10 +19,8 @@ const ChatMessage = ({ msg }) => {
   );
 };
 
-export default function Chatbot({ productData, ratings }) {
-  let [chat, setChat] = useState([
-    { by: "bot", msg: "<p>Hello! How can I assit you?</p>" },
-  ]);
+export default function ChatbotCoshop({ chatData, setChatData }) {
+  let [chat, setChat] = useState(chatData);
 
   const [responding, setResponding] = useState(false);
   const [query, setQuery] = useState("");

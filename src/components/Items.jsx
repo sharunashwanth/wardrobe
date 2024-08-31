@@ -7,6 +7,8 @@ import Category from "./Category";
 import { AiTwotoneHeart } from "react-icons/ai";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { FaStar  } from "react-icons/fa";
+import { IoLogoWechat } from "react-icons/io5";
+import { getFromLocalStorage } from "@/utils/awesomeFuncs";
 
 const getAvgRating = (ratings) => {
     let one = 0;
@@ -68,7 +70,7 @@ const WishList = ({ action, setAction }) => {
         setAction( action !== "wishlist" ? "wishlist" : "none" )
     }
     
-    let styles = `text-2xl p-1 rounded-2xl ${action === "wishlist" ? "bg-red-500" : ""}`
+    let styles = `text-2xl p-1 rounded-2xl ${action === "wishlist" ? "bg-red-500" : "hover:bg-white"}`
     return <button onClick={handleClick} className={styles}>
         <AiTwotoneHeart />
     </button>;
@@ -79,7 +81,7 @@ const Cart = ({ action, setAction }) => {
         setAction( action !== "cart" ? "cart" : "none" )
     }
     
-    let styles = `text-2xl font-thin p-1 rounded-2xl ${action === "cart" ? "bg-yellow-500" : ""}`
+    let styles = `text-2xl font-thin p-1 rounded-2xl ${action === "cart" ? "bg-yellow-500" : "hover:bg-white"}`
     return <button onClick={handleClick} className={styles}>
         <MdOutlineShoppingCart />
     </button>;
@@ -90,10 +92,60 @@ const BuyNow = ({ action, setAction }) => {
         setAction( action !== "buy" ? "buy" : "none" )
     }
     
-    let styles = `px-4 py-1 rounded-2xl bg-slate-300 ${action === "buy" ? "bg-orange-400" : ""}`
+    let styles = `px-4 py-1 rounded-2xl bg-slate-300 ${action === "buy" ? "bg-orange-500" : ""}`
     return <button onClick={handleClick} className={styles}>
         Buy Now
     </button>;
+}
+
+const ShareAndStartChat = ({ productData }) => {
+    const [active, setActive] = useState(false);
+    const [friendId, setFriendId] = useState("");
+    const [creating, setCreating] = useState(false);
+    
+    const handleClick = (e) => {
+        setActive(!active);
+        setFriendId("");
+    }
+
+    const createChat = async () => {
+        setCreating(true);
+
+        let userId = getFromLocalStorage("user_id");
+        let url = `http://acpproject021.pythonanywhere.com/api/coshop/create/`;
+        let payload = {
+            "user": parseInt(userId),
+            "friend": parseInt(friendId),
+            "product": productData
+        }
+
+        let response = await fetch(url, {
+            method: "POST",
+            body: JSON.stringify(payload)
+        });
+
+        response = await response.json();
+        
+        window.location.href = `/coshop/${response.url_id}`;
+
+        setCreating(false);
+    }
+    
+    if (active === true) {
+        return <div className="absolute top-[50%] left-[50%] translate-x-[-60%] translate-y-[-50%] w-[50%] h-[180px] bg-white border-black border-1 rounded-xl shadow-2xl flex flex-col justify-center items-center space-y-4">
+            <div className="text-center space-y-2">
+                <h2 className="font-semibold text-lg">Your friend user ID</h2>
+                <input className="border outline-none px-4 py-1 rounded-lg" type="number" value={friendId} onChange={(e) => setFriendId(e.target.value)} />
+            </div>
+            <div className="flex justify-end items-center w-full space-x-4 px-10">
+                <button disabled={creating} onClick={handleClick} className="bg-slate-400 px-3 py-1 hover:scale-105 rounded-lg text-white">Cancel</button>
+                <button disabled={creating} onClick={createChat} className="bg-orange-400 px-3 py-1 hover:scale-105 rounded-lg text-white">Share</button>
+            </div>
+        </div>
+    }
+    return <button title="Start Chat with a Friend" onClick={handleClick} className={`text-2xl font-thin p-1 rounded-2xl hover:bg-orange-200`}>
+        <IoLogoWechat />
+    </button>
 }
 
 const ImageSection = ({ data }) => {
@@ -190,6 +242,7 @@ export default function Items(props) {
                     <div className="space-x-4">
                         <WishList action={action} setAction={setAction}/>
                         <Cart action={action} setAction={setAction}/>
+                        <ShareAndStartChat productData={data} />
                     </div>
                     <div>
                         <BuyNow action={action} setAction={setAction}/>

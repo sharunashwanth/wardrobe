@@ -37,6 +37,8 @@ export default function ChatbotSearch({ selectedItems, searchResults }) {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(query.trim() === "") return
+    
     setResponding(true);
     chat.push({by: "user", msg: query});
 
