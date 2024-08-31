@@ -9,7 +9,7 @@ export const exportTrackingData = async (invoker) => {
     items_viewed: JSON.parse(getFromLocalStorage("items_viewed")),
   };
   
-  return ;
+  // return ;
   
   let nData = 7;
   let isActionMadeInPastNData = ((items_viewed) => {
